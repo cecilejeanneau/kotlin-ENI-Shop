@@ -6,7 +6,7 @@ import fr.eni.ecole.eni_shop.dao.DaoFactory
 import fr.eni.ecole.eni_shop.dao.DaoType
 
 // singleton same repository for all rqt and so, no parenthesis
-object ArticleRepository {
+class ArticleRepository {
 //    no instance of Factory but enable to access to a "static" -> companion object method
 //    call different source data and return same thing with structure similar
     private var articleDao: ArticleDao = DaoFactory.createArticleDAO(DaoType.MEMORY);

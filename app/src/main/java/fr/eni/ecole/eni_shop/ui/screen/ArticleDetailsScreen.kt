@@ -33,7 +33,7 @@ fun ArticleDetailsScreen(modifier : Modifier = Modifier) {
         topBar = { EniShopTopBar() }
     ) {
         Column(modifier = Modifier.padding(it)) {
-            ArticleDetails(article = ArticleRepository.getArticle(3));
+            ArticleDetails(article = ArticleRepository().getArticle(3));
         }
     }
 }

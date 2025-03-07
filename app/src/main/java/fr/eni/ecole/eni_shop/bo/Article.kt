@@ -37,6 +37,11 @@ data class Article(
         set(value) {
             this._urlImage = value
         }
+    var category: String
+        get() = this._category;
+        set(value) {
+            this._category = value
+        }
     var date: Date
         get() = this._date;
         set(value) {

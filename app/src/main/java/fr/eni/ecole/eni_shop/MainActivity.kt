@@ -7,9 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
-import fr.eni.ecole.eni_shop.ui.screen.AddArticleForm
-import fr.eni.ecole.eni_shop.ui.screen.AddArticlesScreen
-import fr.eni.ecole.eni_shop.ui.screen.ArticleDetailsScreen
+import fr.eni.ecole.eni_shop.ui.screen.ArticleListScreen
 
 //logt enter
 private const val TAG = "MainActivity"
@@ -21,7 +19,8 @@ class MainActivity : ComponentActivity() {
         setContent{
 //            ArticleDetailsScreen();
 //            AddArticleForm();
-            AddArticlesScreen();
+//            AddArticlesScreen();
+            ArticleListScreen();
         }
 
 
