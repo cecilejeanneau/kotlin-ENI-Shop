@@ -5,11 +5,11 @@ import java.util.Date
 data class Article(
     private var _id: Long = 0,
 //    var _name: String,
-    private var _title: String,
-    private var _description: String,
-    private var _price: Double,
-    private var _urlImage: String,
-    private var _category: String,
+    private var _title: String = "",
+    private var _description: String = "",
+    private var _price: Double = 0.0,
+    private var _urlImage: String = "",
+    private var _category: String = "",
     private var _date: Date = Date()
 ){
     var id: Long

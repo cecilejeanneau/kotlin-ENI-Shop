@@ -7,20 +7,24 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.Modifier
+import fr.eni.ecole.eni_shop.ui.screen.ArticleDetailsScreen
 import fr.eni.ecole.eni_shop.ui.screen.ArticleListScreen
+import fr.eni.ecole.eni_shop.vm.ArticleDetailsViewModel
 
 //logt enter
 private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
+//    private val _viewModel = ArticleDetailsViewModel();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent{
-//            ArticleDetailsScreen();
+            ArticleDetailsScreen(articleId = 3);
 //            AddArticleForm();
 //            AddArticlesScreen();
-            ArticleListScreen();
+//            ArticleListScreen();
         }
 
 
