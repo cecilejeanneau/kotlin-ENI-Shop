@@ -13,7 +13,8 @@ import fr.eni.ecole.eni_shop.bo.Article
 fun ArticleList(
     modifier : Modifier = Modifier,
     articles: List<Article>,
-    onClickOnArticle: (Long) -> Unit
+    onClickOnArticle: (Long) -> Unit,
+    articleValue: Long
 ){
     Column {
         LazyVerticalGrid(
@@ -22,7 +23,8 @@ fun ArticleList(
             items(articles){
                 ArticleItem(
                     article = it,
-                    onClickOnArticle = onClickOnArticle
+                    onClickOnArticle = onClickOnArticle,
+                    articleValue = articleValue
                     )
             }
         }

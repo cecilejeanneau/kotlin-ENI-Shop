@@ -26,11 +26,13 @@ import fr.eni.ecole.eni_shop.bo.Article
 fun ArticleItem(
     modifier : Modifier = Modifier,
     article : Article,
-    onClickOnArticle: (Long) -> Unit
+    onClickOnArticle: (Long) -> Unit,
+    articleValue: Long = article.id
 ){
 //    or surface or column or whatever
     Card(
         onClick = {
+//            onClickOnArticle(articleValue)
             onClickOnArticle(article.id)
         }
     ) {

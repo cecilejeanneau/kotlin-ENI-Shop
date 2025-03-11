@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import fr.eni.ecole.eni_shop.ui.common.ArticleList
 import fr.eni.ecole.eni_shop.vm.ArticleListViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import fr.eni.ecole.eni_shop.ui.common.CategoryFilterChip
 import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 
@@ -20,7 +22,9 @@ import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 fun ArticleListScreen(
     modifier: Modifier = Modifier,
     viewModel: ArticleListViewModel = viewModel(factory = ArticleListViewModel.Factory),
-    onClickOnArticle: (Long) -> Unit
+    onClickOnArticle: (Long) -> Unit,
+//    articleValue: Long
+    navHostController: NavHostController
 ) {
     val articles by viewModel.articles.collectAsState();
 //    categories list
@@ -37,8 +41,8 @@ fun ArticleListScreen(
         articles
     }
 
-//    val articleValue by rememberSaveable {
-//        mutableStateOf(article.id)
+//    var articleValue by rememberSaveable {
+//        mutableLongStateOf(0)
 //    }
 
 Scaffold(
@@ -56,7 +60,8 @@ topBar = {
         );
         ArticleList(
             articles = selectedArticles,
-            onClickOnArticle = onClickOnArticle
+            onClickOnArticle = onClickOnArticle,
+            navHostController = navHostController
             )
     }
 }
