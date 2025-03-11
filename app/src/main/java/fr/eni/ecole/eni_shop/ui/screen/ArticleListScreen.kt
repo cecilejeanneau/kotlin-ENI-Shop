@@ -19,7 +19,8 @@ import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 @Composable
 fun ArticleListScreen(
     modifier: Modifier = Modifier,
-    viewModel: ArticleListViewModel = viewModel(factory = ArticleListViewModel.Factory)
+    viewModel: ArticleListViewModel = viewModel(factory = ArticleListViewModel.Factory),
+    onClickOnArticle: (Long) -> Unit
 ) {
     val articles by viewModel.articles.collectAsState();
 //    categories list
@@ -36,6 +37,10 @@ fun ArticleListScreen(
         articles
     }
 
+//    val articleValue by rememberSaveable {
+//        mutableStateOf(article.id)
+//    }
+
 Scaffold(
 topBar = {
     EniShopTopBar()
@@ -49,7 +54,10 @@ topBar = {
                 selectedCategory = it
             } //param it given by onCategoryChange callback from children
         );
-        ArticleList(articles = selectedArticles)
+        ArticleList(
+            articles = selectedArticles,
+            onClickOnArticle = onClickOnArticle
+            )
     }
 }
 }

@@ -25,10 +25,15 @@ import fr.eni.ecole.eni_shop.bo.Article
 @Composable
 fun ArticleItem(
     modifier : Modifier = Modifier,
-    article : Article
+    article : Article,
+    onClickOnArticle: (Long) -> Unit
 ){
 //    or surface or column or whatever
-    Card {
+    Card(
+        onClick = {
+            onClickOnArticle(article.id)
+        }
+    ) {
         Column(
             modifier = Modifier
                 .border(2.dp, Color.LightGray, RoundedCornerShape(16.dp))

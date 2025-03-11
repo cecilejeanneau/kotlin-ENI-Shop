@@ -12,14 +12,18 @@ import fr.eni.ecole.eni_shop.bo.Article
 @Composable
 fun ArticleList(
     modifier : Modifier = Modifier,
-    articles: List<Article>
+    articles: List<Article>,
+    onClickOnArticle: (Long) -> Unit
 ){
     Column {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2)
         ) {
             items(articles){
-                ArticleItem(article = it)
+                ArticleItem(
+                    article = it,
+                    onClickOnArticle = onClickOnArticle
+                    )
             }
         }
     }

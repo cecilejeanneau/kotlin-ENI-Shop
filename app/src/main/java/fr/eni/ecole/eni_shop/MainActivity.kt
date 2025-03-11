@@ -21,10 +21,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent{
-            ArticleDetailsScreen(articleId = 3);
+//            ArticleDetailsScreen(articleId = 3);
 //            AddArticleForm();
 //            AddArticlesScreen();
 //            ArticleListScreen();
+            EniShopApp();
         }
 
 
