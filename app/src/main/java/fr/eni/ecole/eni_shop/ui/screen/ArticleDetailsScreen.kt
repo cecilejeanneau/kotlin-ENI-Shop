@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
@@ -42,7 +43,8 @@ import fr.eni.ecole.eni_shop.vm.ArticleListViewModel
 fun ArticleDetailsScreen(
     modifier: Modifier = Modifier,
     articleDetailsViewModel: ArticleDetailsViewModel = viewModel(factory = ArticleDetailsViewModel.Factory),
-    articleId: Long
+    articleId: Long,
+    navHostController: NavHostController
 ) {
     LaunchedEffect (Unit) {
         articleDetailsViewModel.initArticle(articleId);
@@ -51,11 +53,11 @@ fun ArticleDetailsScreen(
     val article by articleDetailsViewModel.article.collectAsState();
 
     Scaffold(
-        topBar = { EniShopTopBar() }
+        topBar = { EniShopTopBar(navController = navHostController) }
     ) {
         Column(modifier = Modifier.padding(it)) {
 //            ArticleDetails(article = ArticleRepository().getArticle(3));
-
+            ArticleDetails(article = article)
         }
     }
 }

@@ -3,6 +3,7 @@ package fr.eni.ecole.eni_shop.ui.common
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -27,14 +28,13 @@ fun ArticleItem(
     modifier : Modifier = Modifier,
     article : Article,
     onClickOnArticle: (Long) -> Unit,
-    articleValue: Long = article.id
 ){
 //    or surface or column or whatever
     Card(
         onClick = {
-//            onClickOnArticle(articleValue)
             onClickOnArticle(article.id)
         }
+//        modifier.clickable { onClickOnArticle(article.id) }
     ) {
         Column(
             modifier = Modifier

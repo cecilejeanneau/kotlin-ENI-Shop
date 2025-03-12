@@ -15,6 +15,7 @@ import fr.eni.ecole.eni_shop.ui.common.ArticleList
 import fr.eni.ecole.eni_shop.vm.ArticleListViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import fr.eni.ecole.eni_shop.ui.common.ArticleListFAB
 import fr.eni.ecole.eni_shop.ui.common.CategoryFilterChip
 import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 
@@ -23,10 +24,10 @@ fun ArticleListScreen(
     modifier: Modifier = Modifier,
     viewModel: ArticleListViewModel = viewModel(factory = ArticleListViewModel.Factory),
     onClickOnArticle: (Long) -> Unit,
-//    articleValue: Long
     navHostController: NavHostController
 ) {
     val articles by viewModel.articles.collectAsState();
+
 //    categories list
     val categories = viewModel.categories;
     var selectedCategory by rememberSaveable {
@@ -41,28 +42,25 @@ fun ArticleListScreen(
         articles
     }
 
-//    var articleValue by rememberSaveable {
-//        mutableLongStateOf(0)
-//    }
+    Scaffold(
+        topBar = {
+            EniShopTopBar(navController = navHostController);
+        },
+        floatingActionButton = { ArticleListFAB(navController = navHostController) }
 
-Scaffold(
-topBar = {
-    EniShopTopBar()
-}
-) {
-    Column(modifier = Modifier.padding(it)) {
-        CategoryFilterChip(
-            categories = categories,
-            selectedCategory = selectedCategory,
-            onCategoryChange = {
-                selectedCategory = it
-            } //param it given by onCategoryChange callback from children
-        );
-        ArticleList(
-            articles = selectedArticles,
-            onClickOnArticle = onClickOnArticle,
-            navHostController = navHostController
+    ) {
+        Column(modifier = Modifier.padding(it)) {
+            CategoryFilterChip(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategoryChange = {
+                    selectedCategory = it
+                } //param it given by onCategoryChange callback from children
+            );
+            ArticleList(
+                articles = selectedArticles,
+                onClickOnArticle = onClickOnArticle,
             )
+        }
     }
-}
 }

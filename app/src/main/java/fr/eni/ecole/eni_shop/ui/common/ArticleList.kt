@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.items
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 import fr.eni.ecole.eni_shop.bo.Article
 
 @Composable
@@ -14,7 +15,6 @@ fun ArticleList(
     modifier : Modifier = Modifier,
     articles: List<Article>,
     onClickOnArticle: (Long) -> Unit,
-    articleValue: Long
 ){
     Column {
         LazyVerticalGrid(
@@ -24,7 +24,6 @@ fun ArticleList(
                 ArticleItem(
                     article = it,
                     onClickOnArticle = onClickOnArticle,
-                    articleValue = articleValue
                     )
             }
         }

@@ -24,13 +24,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 import fr.eni.ecole.eni_shop.ui.common.FormTextInput
 
 @Composable
-fun AddArticlesScreen(modifier: Modifier = Modifier) {
+fun AddArticlesScreen(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController
+) {
     Scaffold(
-        topBar = { EniShopTopBar() },
+        topBar = { EniShopTopBar(navController = navHostController) },
         modifier = Modifier
             .padding(4.dp),
     ) {
@@ -38,7 +42,7 @@ fun AddArticlesScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.padding(it)
             .verticalScroll(rememberScrollState())
         ) {
-            AddArticleForm()
+            AddArticleForm(navHostController = navHostController)
         }
     }
 }
@@ -51,7 +55,12 @@ fun CategoriesDropDownMenu(
     onCategoryChange: (String) -> Unit
 ) {
     val categories: List<String> =
-        listOf("electronics", "jewelery", "men's clothing", "women's clothing");
+        listOf(
+            "electronics",
+            "jewelery",
+            "men's clothing",
+            "women's clothing"
+        );
 
     DropdownMenu(
         expanded = expanded,
@@ -70,7 +79,10 @@ fun CategoriesDropDownMenu(
 }
 
 @Composable
-fun AddArticleForm(modifier: Modifier = Modifier) {
+fun AddArticleForm(
+    modifier: Modifier = Modifier,
+    navHostController: NavHostController
+) {
     var title by rememberSaveable {
         mutableStateOf("")
     }
@@ -145,7 +157,11 @@ fun AddArticleForm(modifier: Modifier = Modifier) {
         );
         Button(
             onClick = {
-                Toast.makeText(context, "$title a été ajouté", Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                    context,
+                    "$title a été ajouté",
+                    Toast.LENGTH_LONG
+                ).show();
             },
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ) {

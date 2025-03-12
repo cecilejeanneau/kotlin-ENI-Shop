@@ -9,22 +9,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 
-object ArticleDestination : Destination {
-    override val icon: ImageVector
-        get() = Icons.Default.ArrowBack
-    override val route: String = "Article";
-
-    val argName by lazy{
-        "articleValue"
-    };
-
-    val args = listOf(navArgument(argName){
-        type = NavType.LongType
-    });
-
-    val routeWithArgs = "$route/{$argName}";
-}
-
 object ArticleListDestination : Destination {
     override val icon: ImageVector
         get() = Icons.Default.Home;
@@ -41,6 +25,11 @@ object ArticleDetails : Destination {
     override val icon: ImageVector
         get() = Icons.Default.Info;
     override val route: String = "article_detail";
+
+//    for create bundle to separate route params from datas and be more modular and secure
     const val articleDetailArg = "article_id";
-    val arguments = listOf(navArgument(articleDetailArg))
+    val arguments = listOf(navArgument(articleDetailArg){
+        type = NavType.LongType
+    });
+    val routeWithArgs = "${route}/{$articleDetailArg}"
 }
