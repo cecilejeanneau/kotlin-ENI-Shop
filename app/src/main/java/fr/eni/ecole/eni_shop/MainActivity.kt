@@ -7,25 +7,60 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.lifecycleScope
+import fr.eni.ecole.eni_shop.service.DataStoreManager
 import fr.eni.ecole.eni_shop.ui.screen.ArticleDetailsScreen
 import fr.eni.ecole.eni_shop.ui.screen.ArticleListScreen
+import fr.eni.ecole.eni_shop.ui.theme.ENIShopTheme
 import fr.eni.ecole.eni_shop.vm.ArticleDetailsViewModel
+import kotlinx.coroutines.launch
 
 //logt enter
 private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
-//    private val _viewModel = ArticleDetailsViewModel();
+    //    private val _viewModel = ArticleDetailsViewModel();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent{
+
+        var activity = this;
+
+        setContent {
 //            ArticleDetailsScreen(articleId = 3);
 //            AddArticleForm();
 //            AddArticlesScreen();
 //            ArticleListScreen();
-            EniShopApp();
+
+            var isDarkThemeActivated by rememberSaveable {
+                mutableStateOf(false)
+            }
+//            to be able to get this change on every views
+//            read the datastore in coroutine context
+            LaunchedEffect(Unit) {
+                DataStoreManager.isDarkThemeActivated(activity).collect {
+                    isDarkThemeActivated = it;
+                }
+            }
+
+            ENIShopTheme(darkTheme = isDarkThemeActivated) {
+                EniShopApp(
+                    isDarkThemeActivated = isDarkThemeActivated,
+                    onDarkThemeToggle = {
+//                        coroutine of the actual cycle
+                        isActivated: Boolean ->
+                        lifecycleScope.launch {
+                            DataStoreManager.setDarkThemeActivated(activity, isActivated)
+                        }
+                    }
+                );
+            }
         }
 
 

@@ -9,7 +9,14 @@ import fr.eni.ecole.eni_shop.navigation.EniShopNavHost
 @Composable
 fun EniShopApp(
     modifier : Modifier = Modifier,
+    isDarkThemeActivated: Boolean,
+    onDarkThemeToggle: (Boolean) -> Unit,
     ){
     val navHostController: NavHostController = rememberNavController();
-    EniShopNavHost(modifier, navHostController);
+    EniShopNavHost(
+        modifier,
+        navHostController,
+        isDarkThemeActivated = isDarkThemeActivated,
+        onDarkThemeToggle = onDarkThemeToggle
+    );
 }

@@ -50,7 +50,14 @@ android {
 }
 
 dependencies {
-    //for navigation
+
+//    lib.version add dep lib with versions and then hover and reduce...
+//    datastore
+    implementation ("androidx.datastore:datastore-preferences:1.1.0")
+//    coroutines
+//    implementation (libs.kotlinx.coroutines.android)
+//    viewmodel
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3 ")    //for navigation
     implementation("androidx.navigation:navigation-runtime-ktx:2.8.4")
     implementation ("androidx.navigation:navigation-compose:2.8.4")
 

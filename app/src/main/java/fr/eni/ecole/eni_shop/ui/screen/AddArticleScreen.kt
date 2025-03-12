@@ -31,16 +31,25 @@ import fr.eni.ecole.eni_shop.ui.common.FormTextInput
 @Composable
 fun AddArticlesScreen(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    isDarkThemeActivated: Boolean,
+    onDarkThemeToggle: (Boolean) -> Unit,
 ) {
     Scaffold(
-        topBar = { EniShopTopBar(navController = navHostController) },
+        topBar = {
+            EniShopTopBar(
+                navController = navHostController,
+                isDarkThemeActivated = isDarkThemeActivated,
+                onDarkThemeToggle = onDarkThemeToggle
+            )
+        },
         modifier = Modifier
             .padding(4.dp),
     ) {
         Column(
-            modifier = Modifier.padding(it)
-            .verticalScroll(rememberScrollState())
+            modifier = Modifier
+                .padding(it)
+                .verticalScroll(rememberScrollState())
         ) {
             AddArticleForm(navHostController = navHostController)
         }

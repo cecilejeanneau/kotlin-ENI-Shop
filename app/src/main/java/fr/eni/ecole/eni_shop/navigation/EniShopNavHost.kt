@@ -18,7 +18,9 @@ import fr.eni.ecole.eni_shop.ui.screen.ArticleListScreen
 @Composable
 fun EniShopNavHost(
     modifier: Modifier = Modifier,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    isDarkThemeActivated: Boolean,
+    onDarkThemeToggle: (Boolean) -> Unit,
 ) {
     NavHost(
         navController = navHostController,
@@ -31,7 +33,9 @@ fun EniShopNavHost(
                 onClickOnArticle = {
                     navHostController.navigate("${ArticleDetails.route}/$it");
                 },
-                navHostController = navHostController
+                navHostController = navHostController,
+                isDarkThemeActivated = isDarkThemeActivated,
+                onDarkThemeToggle = onDarkThemeToggle
             );
         };
         composable(
@@ -40,14 +44,18 @@ fun EniShopNavHost(
             val articleId = it.arguments?.getLong(ArticleDetails.articleDetailArg)?:0;
             ArticleDetailsScreen(
                 articleId = articleId,
-                navHostController = navHostController
+                navHostController = navHostController,
+                isDarkThemeActivated = isDarkThemeActivated,
+                onDarkThemeToggle = onDarkThemeToggle
             );
         };
         composable(
             route = AddArticle.route
         ) {
             AddArticlesScreen(
-                navHostController = navHostController
+                navHostController = navHostController,
+                isDarkThemeActivated = isDarkThemeActivated,
+                onDarkThemeToggle = onDarkThemeToggle
             );
         };
     }

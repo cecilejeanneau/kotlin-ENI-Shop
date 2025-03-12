@@ -44,7 +44,9 @@ fun ArticleDetailsScreen(
     modifier: Modifier = Modifier,
     articleDetailsViewModel: ArticleDetailsViewModel = viewModel(factory = ArticleDetailsViewModel.Factory),
     articleId: Long,
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    isDarkThemeActivated: Boolean,
+    onDarkThemeToggle: (Boolean) -> Unit,
 ) {
     LaunchedEffect (Unit) {
         articleDetailsViewModel.initArticle(articleId);
@@ -53,7 +55,13 @@ fun ArticleDetailsScreen(
     val article by articleDetailsViewModel.article.collectAsState();
 
     Scaffold(
-        topBar = { EniShopTopBar(navController = navHostController) }
+        topBar = {
+            EniShopTopBar(
+                navController = navHostController,
+                isDarkThemeActivated = isDarkThemeActivated,
+                onDarkThemeToggle = onDarkThemeToggle
+            )
+        }
     ) {
         Column(modifier = Modifier.padding(it)) {
 //            ArticleDetails(article = ArticleRepository().getArticle(3));
