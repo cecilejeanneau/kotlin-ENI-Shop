@@ -2,18 +2,20 @@ package fr.eni.ecole.eni_shop.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
+import fr.eni.ecole.eni_shop.room.AppDatabase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 class ArticleListViewModel(
     private val _articleRepository: ArticleRepository
 ) : ViewModel() {
 
     private val _articles = MutableStateFlow<List<Article>>(emptyList());
+
     //  var articles: StateFlow<List<Article>> = _articles.asStateFlow();
     val articles: StateFlow<List<Article>>
         get() = _articles
@@ -48,9 +50,13 @@ class ArticleListViewModel(
                 // Create a SavedStateHandle for this ViewModel from extras
 //                val savedStateHandle = extras.createSavedStateHandle()
 
+                val application = checkNotNull(extras[APPLICATION_KEY]);
                 return ArticleListViewModel(
 //                    instance of ArticleRepository
-                    ArticleRepository(),
+//                    singleton instance of articleDAO from AppDatabase -> Room
+                    ArticleRepository(
+                        AppDatabase.getInstance(application.applicationContext).articleDAO()
+                    ),
                 ) as T
             }
         }

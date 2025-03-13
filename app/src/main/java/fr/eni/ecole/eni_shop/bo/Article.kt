@@ -1,10 +1,16 @@
 package fr.eni.ecole.eni_shop.bo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import fr.eni.ecole.eni_shop.utils.DataRoomConverter
 import java.util.Date
 
+@Entity
+@TypeConverters(DataRoomConverter::class)
 data class Article(
+    @PrimaryKey(autoGenerate = true)
     private var _id: Long = 0,
-//    var _name: String,
     private var _title: String = "",
     private var _description: String = "",
     private var _price: Double = 0.0,

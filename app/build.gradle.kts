@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp") //    use KSP plugin
 }
 
 android {
@@ -50,6 +51,14 @@ android {
 }
 
 dependencies {
+implementation(libs.androidx.constraintlayout)
+    //    room
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    testImplementation("androidx.room:room-testing:$room_version")
 
 //    lib.version add dep lib with versions and then hover and reduce...
 //    datastore

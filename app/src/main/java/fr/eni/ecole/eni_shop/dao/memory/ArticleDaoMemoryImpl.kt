@@ -1,13 +1,11 @@
 package fr.eni.ecole.eni_shop.dao.memory
+
 import fr.eni.ecole.eni_shop.bo.Article
 import fr.eni.ecole.eni_shop.dao.ArticleDao
 
 class ArticleDaoMemoryImpl : ArticleDao {
-//    private var _articlesInMemory: MutableList<Article> = {
-//
-//    }
 
-    val articles : MutableList<Article> = mutableListOf(
+    val articles: MutableList<Article> = mutableListOf(
 // emptyList<>()
         Article(
             _id = 1,
@@ -19,7 +17,7 @@ class ArticleDaoMemoryImpl : ArticleDao {
         ),
         Article(
             _id = 2,
-            _title= "Mens Casual Premium Slim Fit T-Shirts",
+            _title = "Mens Casual Premium Slim Fit T-Shirts",
             _description = "Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing. And Solid stitched shirts with round neck made for durability and a great fit for casual fashion wear and diehard baseball fans. The Henley style round neckline includes a three-button placket.",
             _price = 22.3,
             _urlImage = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
@@ -55,6 +53,14 @@ class ArticleDaoMemoryImpl : ArticleDao {
         return articles;
     }
 
+    override fun deleteOne(article: Article) {
+        TODO("Not yet implemented")
+    }
+
+//    override fun deleteOne(id: Long) {
+//        TODO("Not yet implemented")
+//    }
+
     override fun insert(
         article: Article
 //immuable car référence objet
@@ -66,15 +72,18 @@ class ArticleDaoMemoryImpl : ArticleDao {
     }
 
     override fun insertMultiples(articles: MutableList<Article>): List<Long> {
-        var articlesId = mutableListOf<Long>();
-
-        for(article in articles) {
-            article.id = articles.size.toLong() + 1;
-            articles.add(article);
-            articlesId.add(article.id)
-        }
-
-        return articlesId;
+        TODO("Not yet implemented")
     }
 
+//    override fun insertMultiples(articles: MutableList<Article>): List<Long> {
+//        var articlesId = mutableListOf<Long>();
+//
+//        for(article in articles) {
+//            article.id = articles.size.toLong() + 1;
+//            articles.add(article);
+//            articlesId.add(article.id)
+//        }
+//
+//        return articlesId;
+//    }
 }

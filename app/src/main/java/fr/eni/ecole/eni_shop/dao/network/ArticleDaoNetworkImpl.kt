@@ -12,6 +12,10 @@ class ArticleDaoNetworkImpl : ArticleDao {
         TODO("Not yet implemented")
     }
 
+    override fun deleteOne(article: Article) {
+        TODO("Not yet implemented")
+    }
+
     override fun insert(article: Article): Long {
         TODO("Not yet implemented")
     }

@@ -2,6 +2,7 @@ package fr.eni.ecole.eni_shop.ui.screen
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +26,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -33,11 +33,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import fr.eni.ecole.eni_shop.bo.Article
-import fr.eni.ecole.eni_shop.repository.ArticleRepository
 import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
 import fr.eni.ecole.eni_shop.utils.toFrenchStringFormat
 import fr.eni.ecole.eni_shop.vm.ArticleDetailsViewModel
-import fr.eni.ecole.eni_shop.vm.ArticleListViewModel
 
 @Composable
 fun ArticleDetailsScreen(
@@ -48,7 +46,7 @@ fun ArticleDetailsScreen(
     isDarkThemeActivated: Boolean,
     onDarkThemeToggle: (Boolean) -> Unit,
 ) {
-    LaunchedEffect (Unit) {
+    LaunchedEffect(Unit) {
         articleDetailsViewModel.initArticle(articleId);
     }
 
@@ -64,18 +62,26 @@ fun ArticleDetailsScreen(
         }
     ) {
         Column(modifier = Modifier.padding(it)) {
-//            ArticleDetails(article = ArticleRepository().getArticle(3));
-            ArticleDetails(article = article)
+            ArticleDetails(
+                article = article,
+                articleDetailsViewModel = articleDetailsViewModel
+            );
         }
     }
 }
 
 @Composable
-fun ArticleDetails(article: Article, modifier: Modifier = Modifier) {
+fun ArticleDetails(
+    article: Article,
+    modifier: Modifier = Modifier,
+    articleDetailsViewModel: ArticleDetailsViewModel = viewModel(factory = ArticleDetailsViewModel.Factory)
+) {
     val context = LocalContext.current;
     val uri = Uri.parse(
         "https://www.google.fr/search?q=eni+shop+${article.title}"
     );
+
+    val checked by articleDetailsViewModel.checked.collectAsState();
 
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -105,7 +111,7 @@ fun ArticleDetails(article: Article, modifier: Modifier = Modifier) {
                         Uri.parse(
                             "https://www.google.fr/search?q=eni+shop+${article.title}"
                         )
-                    ).also {context.startActivity(it)}
+                    ).also { context.startActivity(it) }
                 }
             );
         }
@@ -117,7 +123,6 @@ fun ArticleDetails(article: Article, modifier: Modifier = Modifier) {
                 model = article.urlImage,
                 contentDescription = "the ${article.title} image",
                 modifier = Modifier.size(200.dp),
-//                contentScale = ContentScale.Crop    ???
             )
         };
         Text(
@@ -142,7 +147,25 @@ fun ArticleDetails(article: Article, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Center,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Checkbox(checked = true, onCheckedChange = {});
+            Checkbox(checked = checked, onCheckedChange = {
+                articleDetailsViewModel.updateCheck(it);
+                val toast = if (checked) "Article enregistré dans vos favoris" else "Article supprimé de vos favoris";
+                Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+
+//                if (it) {
+//                    Toast.makeText(
+//                        context,
+//                        "Article enregistré dans vos favoris",
+//                        Toast.LENGTH_LONG
+//                    ).show();
+//                } else {
+//                    Toast.makeText(
+//                        context,
+//                        "Article supprimé de vos favoris",
+//                        Toast.LENGTH_LONG
+//                    ).show();
+//                }
+            });
             Text(text = "Favoris ?");
         }
     }
