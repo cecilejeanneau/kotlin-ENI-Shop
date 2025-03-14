@@ -3,6 +3,7 @@ package fr.eni.ecole.eni_shop.bo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.squareup.moshi.Json
 import fr.eni.ecole.eni_shop.utils.DataRoomConverter
 import java.util.Date
 
@@ -11,11 +12,14 @@ import java.util.Date
 data class Article(
     @PrimaryKey(autoGenerate = true)
     private var _id: Long = 0,
+    @Json(name="title")
     private var _title: String = "",
     private var _description: String = "",
     private var _price: Double = 0.0,
+    @Json(name="image")
     private var _urlImage: String = "",
     private var _category: String = "",
+    @Json(ignore = true)
     private var _date: Date = Date()
 ){
     var id: Long

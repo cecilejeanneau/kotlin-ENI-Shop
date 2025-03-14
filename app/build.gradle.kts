@@ -51,8 +51,8 @@ android {
 }
 
 dependencies {
-implementation(libs.androidx.constraintlayout)
-    //    room
+    implementation(libs.androidx.constraintlayout)
+//    room
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
@@ -62,16 +62,24 @@ implementation(libs.androidx.constraintlayout)
 
 //    lib.version add dep lib with versions and then hover and reduce...
 //    datastore
-    implementation ("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.0")
+
 //    coroutines
 //    implementation (libs.kotlinx.coroutines.android)
 //    viewmodel
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3 ")    //for navigation
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3 ")    //for navigation
     implementation("androidx.navigation:navigation-runtime-ktx:2.8.4")
-    implementation ("androidx.navigation:navigation-compose:2.8.4")
+    implementation("androidx.navigation:navigation-compose:2.8.4")
 
-    //accès à la méthode viewModel()
+//accès à la méthode viewModel()
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
+//moshi
+    implementation("com.squareup.moshi:moshi:1.14.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
+//retrofit
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -88,5 +96,6 @@ implementation(libs.androidx.constraintlayout)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     //AsyncImage
-    implementation("io.coil-kt:coil-compose:2.5.0")}
+    implementation("io.coil-kt:coil-compose:2.5.0")
+}
 

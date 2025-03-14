@@ -3,12 +3,18 @@ package fr.eni.ecole.eni_shop.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import fr.eni.ecole.eni_shop.bo.Article
+import fr.eni.ecole.eni_shop.dao.ArticleServiceAPI
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
 import fr.eni.ecole.eni_shop.room.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class ArticleListViewModel(
     private val _articleRepository: ArticleRepository
@@ -21,16 +27,36 @@ class ArticleListViewModel(
         get() = _articles
 
 
+    private val _categories = MutableStateFlow<List<String>>(emptyList());
+
+    //  var articles: StateFlow<List<Article>> = _articles.asStateFlow();
+    val categories: StateFlow<List<String>>
+        get() = _categories
+
+
+    var isLoading = MutableStateFlow(true);
+
     init {
-        _articles.value = _articleRepository.getAllArticles();
+// old code       _articles.value = _articleRepository.getAllArticles();
+
+//        access to network so In and Outs = IO
+        viewModelScope.launch(Dispatchers.IO) {
+            val a = async { _articles.value = _articleRepository.getAllArticles(); }
+            val c = async { _categories.value = _articleRepository.getCategories(); }
+
+            awaitAll(a, c);
+
+            isLoading.value = false;
+        }
     }
 
-    val categories: List<String> = listOf(
-        "Electronics",
-        "Jewelery",
-        "Men's clothing",
-        "Women's clothing"
-    )
+//    old code
+//    val categories: List<String> = listOf(
+//        "Electronics",
+//        "Jewelery",
+//        "Men's clothing",
+//        "Women's clothing"
+//    )
 //    private val _categories = MutableStateFlow<List<String>>(emptyList());
 //    val categories: StateFlow<List<String>>
 //        get() = _categories
@@ -55,7 +81,8 @@ class ArticleListViewModel(
 //                    instance of ArticleRepository
 //                    singleton instance of articleDAO from AppDatabase -> Room
                     ArticleRepository(
-                        AppDatabase.getInstance(application.applicationContext).articleDAO()
+                        AppDatabase.getInstance(application.applicationContext).articleDAO(),
+                        ArticleServiceAPI.ArticleAPI.retrofitService
                     ),
                 ) as T
             }

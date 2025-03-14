@@ -18,6 +18,7 @@ import androidx.navigation.NavHostController
 import fr.eni.ecole.eni_shop.ui.common.ArticleListFAB
 import fr.eni.ecole.eni_shop.ui.common.CategoryFilterChip
 import fr.eni.ecole.eni_shop.ui.common.EniShopTopBar
+import fr.eni.ecole.eni_shop.ui.common.LoadingScreen
 
 @Composable
 fun ArticleListScreen(
@@ -31,7 +32,7 @@ fun ArticleListScreen(
     val articles by viewModel.articles.collectAsState();
 
 //    categories list
-    val categories = viewModel.categories;
+    val categories by viewModel.categories.collectAsState();
     var selectedCategory by rememberSaveable {
         mutableStateOf("")
     }
@@ -44,6 +45,8 @@ fun ArticleListScreen(
         articles
     }
 
+    val isLoading by viewModel.isLoading.collectAsState();
+
     Scaffold(
         topBar = {
             EniShopTopBar(
@@ -55,18 +58,22 @@ fun ArticleListScreen(
         floatingActionButton = { ArticleListFAB(navController = navHostController) }
 
     ) {
-        Column(modifier = Modifier.padding(it)) {
-            CategoryFilterChip(
-                categories = categories,
-                selectedCategory = selectedCategory,
-                onCategoryChange = {
-                    selectedCategory = it
-                } //param it given by onCategoryChange callback from children
-            );
-            ArticleList(
-                articles = selectedArticles,
-                onClickOnArticle = onClickOnArticle,
-            )
+        if (isLoading) {
+            LoadingScreen();
+        } else {
+            Column(modifier = Modifier.padding(it)) {
+                CategoryFilterChip(
+                    categories = categories,
+                    selectedCategory = selectedCategory,
+                    onCategoryChange = {
+                        selectedCategory = it
+                    } //param it given by onCategoryChange callback from children
+                );
+                ArticleList(
+                    articles = selectedArticles,
+                    onClickOnArticle = onClickOnArticle,
+                )
+            }
         }
     }
 }

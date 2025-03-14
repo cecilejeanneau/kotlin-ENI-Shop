@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import fr.eni.ecole.eni_shop.bo.Article
+import fr.eni.ecole.eni_shop.dao.ArticleServiceAPI
 import fr.eni.ecole.eni_shop.dao.DaoType
 import fr.eni.ecole.eni_shop.repository.ArticleRepository
 import fr.eni.ecole.eni_shop.room.AppDatabase
@@ -30,13 +31,14 @@ class ArticleDetailsViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val article = articleRepository.getArticle(id, DaoType.ROOM);
             if (article != null) _checked.value = true;
-        }
+
 //        layer presentation, one thread for views, avoid to be kill/block = coroutine to load values for views in background
-        val currentArticle = articleRepository.getArticle(id);
+            val currentArticle = articleRepository.getArticle(id);
 //        val currentArticle = _articleDao.findById(id);
-        if (currentArticle != null) {
+            if (currentArticle != null) {
 //            useless by constructor auto init
-            _article.value = currentArticle;
+                _article.value = currentArticle;
+            }
         }
     }
 
@@ -70,7 +72,8 @@ class ArticleDetailsViewModel(
                 val application = checkNotNull(extras[APPLICATION_KEY]);
                 return ArticleDetailsViewModel(
                     ArticleRepository(
-                        AppDatabase.getInstance(application.applicationContext).articleDAO()
+                        AppDatabase.getInstance(application.applicationContext).articleDAO(),
+                        ArticleServiceAPI.ArticleAPI.retrofitService
                     ),
                 ) as T
             }
