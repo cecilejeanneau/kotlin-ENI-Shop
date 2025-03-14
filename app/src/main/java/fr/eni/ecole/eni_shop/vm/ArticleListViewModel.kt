@@ -41,10 +41,12 @@ class ArticleListViewModel(
 
 //        access to network so In and Outs = IO
         viewModelScope.launch(Dispatchers.IO) {
-            val a = async { _articles.value = _articleRepository.getAllArticles(); }
-            val c = async { _categories.value = _articleRepository.getCategories(); }
+//            val a = async { _articles.value = _articleRepository.getAllArticles(); }
+            _articles.value = _articleRepository.getAllArticles();
+//            val c = async { _categories.value = _articleRepository.getCategories(); }
+            _categories.value = _articleRepository.getCategories();
 
-            awaitAll(a, c);
+//            awaitAll(a, c);
 
             isLoading.value = false;
         }

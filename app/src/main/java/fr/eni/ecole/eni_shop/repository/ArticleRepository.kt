@@ -46,7 +46,7 @@ class ArticleRepository(
     ): Long {
         return when(daoTYpe){
 //            DaoType.MEMORY -> articleDaoMemory.insert(article);
-//            DaoType.NETWORK -> // TODO;
+//            DaoType.NETWORK -> TODO()
             else -> articleDaoRoom.insert(article);
         }
     }
@@ -57,7 +57,7 @@ class ArticleRepository(
     ): List<Long> {
         return when(daoTYpe){
 //            DaoType.MEMORY -> articleDaoMemory.insertMultiples(articles);
-//            DaoType.NETWORK -> // TODO;
+//            DaoType.NETWORK -> TODO()
             else -> articleDaoRoom.insertMultiples(articles);
         }
     }
@@ -68,7 +68,7 @@ class ArticleRepository(
     ): Unit {
         return when(daoTYpe){
 //            DaoType.MEMORY -> articleDaoMemory.deleteOne(article);
-//            DaoType.NETWORK -> // TODO;
+//            DaoType.NETWORK -> TODO()
             else -> articleDaoRoom.deleteOne(article);
         }
     }
